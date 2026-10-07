@@ -1718,7 +1718,7 @@ h1, h2, h3, p { margin: 0; }
         <div class="scene-offer2-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="18"></i><span>A strategy built with you</span></div>
         <div class="scene-offer2-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="18"></i><span>You approve and direct. You never touch a settings screen.</span></div>
       </div>
-      <a class="button-action-pill-large-v1 scene-offer2-cta-v1" data-cta="offer-audit" href="https://clients.affinitydesign.ca/offers/strategy-audit?ref=va-colour-your-life" target="_blank" rel="noopener">Get my free strategy audit<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="20"></i></a>
+      <a class="button-action-pill-large-v1 scene-offer2-cta-v1" data-cta="offer-audit" href="https://clients.affinitydesign.ca/offers/strategy-audit" target="_blank" rel="noopener">Get my free strategy audit<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="20"></i></a>
     </div>
     <div class="card-panel-surface-base-v1 scene-offer2-card-v1" data-offer>
       <div class="scene-offer2-top-v1"><span class="chip-label-pill-base-v1">The class</span><span class="scene-offer2-band-v1">Under $250K a year</span></div>
@@ -1731,7 +1731,7 @@ h1, h2, h3, p { margin: 0; }
         <div class="scene-offer2-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="18"></i><span>Your first agent switched on with us on the call</span></div>
         <div class="scene-offer2-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="18"></i><span>Lesson library and live weekly group calls</span></div>
       </div>
-      <a class="button-action-pill-ghost-large-v1 scene-offer2-cta-v1" data-cta="offer-waitlist" href="https://clients.affinitydesign.ca/offers/strategy-audit?ref=va-colour-your-life" target="_blank" rel="noopener">Join the waitlist<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="20"></i></a>
+      <a class="button-action-pill-ghost-large-v1 scene-offer2-cta-v1" data-cta="offer-waitlist" href="https://clients.affinitydesign.ca/offers/strategy-audit" target="_blank" rel="noopener">Join the waitlist<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="20"></i></a>
     </div>
   </div>
   <div class="card-panel-surface-base-v1 scene-offer2-foot-v1" id="offerFoot">
@@ -1759,7 +1759,7 @@ h1, h2, h3, p { margin: 0; }
     </div>
     <div class="scene-close-sales-act-v1">
       <div class="scene-close-sales-actions-v1" data-r>
-        <a class="button-action-pill-large-v1" id="ctaButton" data-cta="close-cta" href="https://clients.affinitydesign.ca/offers/strategy-audit?ref=va-colour-your-life" target="_blank" rel="noopener">Get my free strategy audit<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="22"></i></a>
+        <a class="button-action-pill-large-v1" id="ctaButton" data-cta="close-cta" href="https://clients.affinitydesign.ca/offers/strategy-audit" target="_blank" rel="noopener">Get my free strategy audit<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="22"></i></a>
         <button class="control-button-pill-ghost-v1" id="copyLinkButton" type="button">Copy link</button>
       </div>
       <input class="scene-close-sales-fallback-v1" id="copyFallback" type="text" readonly hidden aria-label="Link to the free strategy audit">
@@ -1983,12 +1983,11 @@ const SC = {};
 /* ═══════════════════════ Links: which deck version, and where the buttons go ═══════════════════════ */
 /* @links:start */
 // Every call to action goes to the free strategy audit and carries the visitor's ?ref= and ?industry=.
+// The deck adds no ref of its own: a link without one carries none, and each sales rep adds theirs.
 // This follows af-website-offer (web.goaffinitydesign.com): lib/signup.ts collects the tracking params, lib/audit.ts builds the audit link.
 // tests/sales-deck-links.test.ts lifts this block out of the built deck and runs it, so keep it free of DOM calls.
 const LINKS = (() => {
   const AUDIT_URL = 'https://clients.affinitydesign.ca/offers/strategy-audit';
-  // The ref a plain link carries. A rep's own code (ref, aff, affiliate or code in the URL) replaces it.
-  const DEFAULT_REF = 'va-colour-your-life';
   const STORAGE_KEY = 'afd_tracking_params'; // the offer site's key; kept for the visit only (sessionStorage)
 
   // The versions of the deck that exist, one per pre-authorised industry. Any other industry gets DEFAULT_VARIANT.
@@ -2080,7 +2079,6 @@ const LINKS = (() => {
     const url = new URL(AUDIT_URL);
     const set = (k, v) => { if (v && !url.searchParams.has(k)) url.searchParams.set(k, v); };
     Object.keys(ctx.tracking).forEach((k) => set(k, ctx.tracking[k]));
-    if (!CODE_KEYS.some((k) => ctx.tracking[k])) set('ref', DEFAULT_REF);
     set('icp', ctx.icp);
     if (ctx.industry) set('industry', ctx.industry.slug);
     if (ctx.location) set('location', ctx.location.slug);
