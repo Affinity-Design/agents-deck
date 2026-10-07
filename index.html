@@ -474,21 +474,21 @@ h1, h2, h3, p { margin: 0; }
 .scene-days-guarantee-v1 b { display: block; font-size: 19px; font-weight: 500; letter-spacing: -.015em; margin-bottom: 2px; }
 
 /* ── 14 close ── */
-.scene-close-sales-layout-v1 { display: flex; align-items: center; justify-content: space-between; gap: 36px; flex: 1; margin-top: -28px; margin-bottom: 36px; }
-.scene-close-sales-copy-v1 { width: 800px; display: flex; flex-direction: column; align-items: flex-start; }
-.scene-close-sales-list-v1 { display: flex; flex-direction: column; gap: 10px; margin: 2px 0 24px; }
+.scene-close-sales-layout-v1 { display: grid; grid-template-columns: minmax(0, 1fr) 520px; grid-template-areas: "copy card" "act card"; column-gap: 56px; row-gap: 30px; align-content: center; flex: 1; margin-top: -28px; margin-bottom: 36px; }
+.scene-close-sales-copy-v1 { grid-area: copy; align-self: end; display: flex; flex-direction: column; align-items: flex-start; }
+.scene-close-sales-act-v1 { grid-area: act; align-self: start; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.scene-close-sales-gets-card-v1 { grid-area: card; align-self: center; padding: 28px 30px 30px; display: flex; flex-direction: column; gap: 18px; }
+.scene-close-sales-gets-card-v1 b { font-size: 22px; font-weight: 500; letter-spacing: -.02em; }
+.scene-close-sales-list-v1 { display: flex; flex-direction: column; gap: 16px; }
 .scene-close-sales-list-row-v1 { display: flex; gap: 12px; align-items: flex-start; font-size: 19px; line-height: 1.4; }
 .scene-close-sales-list-row-v1 .icon-glyph-inline-base-v1 { color: var(--c-ok-text); margin-top: 3px; }
 .scene-close-sales-actions-v1 { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .button-action-pill-large-v1 { display: inline-flex; align-items: center; gap: 12px; padding: 18px 34px; border: 0; border-radius: var(--radius-pill); background: var(--c-primary); color: var(--c-primary-ink); font-size: 21px; font-weight: 600; letter-spacing: -.015em; text-decoration: none; cursor: pointer; box-shadow: var(--shadow-lift); transition: transform .15s; }
 .button-action-pill-large-v1:hover { transform: translateY(-1px); }
 .button-action-pill-large-v1:active { transform: scale(.98); }
-.scene-close-sales-micro-v1 { margin-top: 14px; font-size: 15px; color: var(--c-text-2); }
-.scene-close-sales-qr-card-v1 { width: 430px; flex: none; padding: 26px 26px 22px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
-.scene-close-sales-qr-frame-v1 { padding: 16px; border-radius: 22px; background: #fff; box-shadow: var(--shadow-card); border: 1px solid var(--c-border); }
-.scene-close-sales-qr-frame-v1 img { display: block; width: 300px; height: 300px; }
-.scene-close-sales-qr-card-v1 b { font-size: 22px; font-weight: 500; letter-spacing: -.02em; }
-.scene-close-sales-link-v1 { font-family: var(--font-code); font-size: 14px; color: var(--c-text-2); word-break: break-all; user-select: all; }
+.scene-close-sales-micro-v1 { font-size: 15px; color: var(--c-text-2); }
+.scene-close-sales-fallback-v1 { width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid var(--c-border-strong); border-radius: 12px; background: var(--c-surface-2); color: var(--c-text); font-family: var(--font-code); font-size: 13px; }
+.scene-close-sales-fallback-v1[hidden] { display: none; }
 .scene-close-sales-links-v1 { position: absolute; left: 112px; right: 112px; bottom: 74px; display: flex; align-items: center; justify-content: space-between; gap: 24px; font-size: 13px; line-height: 1.5; color: var(--c-text-2); }
 
 @media (max-width: 700px) {
@@ -1028,15 +1028,15 @@ h1, h2, h3, p { margin: 0; }
   .scene-offer2-foot-v1 { flex-wrap: wrap; padding: 14px 16px; font-size: 16px; gap: 10px 14px; } .scene-offer2-foot-v1 small { margin-left: 0; flex-basis: 100%; }
 
   /* 17 the close */
-  .scene-close-sales-layout-v1 { flex-direction: column; align-items: stretch; justify-content: flex-start; flex: none; margin: 0 0 18px; gap: 20px; }
-  .scene-close-sales-copy-v1 { width: 100%; }
+  .scene-close-sales-layout-v1 { display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; flex: none; margin: 0 0 18px; gap: 20px; }
+  .scene-close-sales-copy-v1, .scene-close-sales-act-v1 { width: 100%; align-self: stretch; }
   .scene-close-sales-copy-v1 .text-heading-slide-title-v1 { font-size: clamp(28px, min(9.4vw, 9vh), 50px) !important; }
+  .scene-close-sales-gets-card-v1 { width: 100%; padding: 20px; gap: 14px; }
+  .scene-close-sales-list-v1 { gap: 12px; }
   .scene-close-sales-list-row-v1 { font-size: 16.5px; }
-  .scene-close-sales-actions-v1 { flex-direction: column; align-items: stretch; gap: 12px; }
+  .scene-close-sales-actions-v1 { flex-direction: column; align-items: stretch; gap: 12px; width: 100%; }
   .button-action-pill-large-v1 { justify-content: center; font-size: 18px; padding: 16px 22px; }
   .scene-close-sales-actions-v1 .control-button-pill-ghost-v1 { align-self: center; }
-  .scene-close-sales-qr-card-v1 { width: 100%; max-width: 380px; margin: 0 auto; padding: 20px; }
-  .scene-close-sales-qr-frame-v1 img { width: min(300px, 62vw); height: auto; }
   .scene-close-sales-links-v1 { position: static; flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 4px; }
   .scene-close-sales-links-v1 > span:last-child { text-align: left !important; }
 }
@@ -1718,7 +1718,7 @@ h1, h2, h3, p { margin: 0; }
         <div class="scene-offer2-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="18"></i><span>A strategy built with you</span></div>
         <div class="scene-offer2-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="18"></i><span>You approve and direct. You never touch a settings screen.</span></div>
       </div>
-      <a class="button-action-pill-large-v1 scene-offer2-cta-v1" href="https://api.v2.affinitydesign.ca/r/get-ai?medium=short_link" target="_blank" rel="noopener">Get my free strategy audit<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="20"></i></a>
+      <a class="button-action-pill-large-v1 scene-offer2-cta-v1" data-cta="offer-audit" href="https://clients.affinitydesign.ca/offers/strategy-audit?ref=va-colour-your-life" target="_blank" rel="noopener">Get my free strategy audit<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="20"></i></a>
     </div>
     <div class="card-panel-surface-base-v1 scene-offer2-card-v1" data-offer>
       <div class="scene-offer2-top-v1"><span class="chip-label-pill-base-v1">The class</span><span class="scene-offer2-band-v1">Under $250K a year</span></div>
@@ -1731,7 +1731,7 @@ h1, h2, h3, p { margin: 0; }
         <div class="scene-offer2-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="18"></i><span>Your first agent switched on with us on the call</span></div>
         <div class="scene-offer2-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="18"></i><span>Lesson library and live weekly group calls</span></div>
       </div>
-      <a class="button-action-pill-ghost-large-v1 scene-offer2-cta-v1" href="https://api.v2.affinitydesign.ca/r/get-ai?medium=short_link" target="_blank" rel="noopener">Join the waitlist<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="20"></i></a>
+      <a class="button-action-pill-ghost-large-v1 scene-offer2-cta-v1" data-cta="offer-waitlist" href="https://clients.affinitydesign.ca/offers/strategy-audit?ref=va-colour-your-life" target="_blank" rel="noopener">Join the waitlist<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="20"></i></a>
     </div>
   </div>
   <div class="card-panel-surface-base-v1 scene-offer2-foot-v1" id="offerFoot">
@@ -1747,22 +1747,23 @@ h1, h2, h3, p { margin: 0; }
     <div class="scene-close-sales-copy-v1">
       <div class="text-eyebrow-chip-row-v1" data-r><span class="chip-label-pill-base-v1 chip-label-pill-accent-v1"><i class="chip-dot-status-base-v1"></i>Free · about 3 minutes · no card, ever</span></div>
       <h2 class="text-heading-slide-title-v1" style="font-size:68px" data-r>Find out where your growth <span class="text-accent-emphasis-v1">is leaking.</span></h2>
+    </div>
+    <div class="card-panel-surface-base-v1 scene-close-sales-gets-card-v1" data-r>
+      <b>What your audit gives you</b>
       <div class="scene-close-sales-list-v1">
-        <div class="scene-close-sales-list-row-v1" data-r><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="20"></i><span>Your score out of 100 across demand, capture, conversion and leverage</span></div>
-        <div class="scene-close-sales-list-row-v1" data-r><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="20"></i><span>Exactly where you're leaking, in your own words</span></div>
-        <div class="scene-close-sales-list-row-v1" data-r><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="20"></i><span>The three agents to switch on first, and the ones to skip for now</span></div>
-        <div class="scene-close-sales-list-row-v1" data-r><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="20"></i><span>An honest verdict on the AI tools you already pay for</span></div>
+        <div class="scene-close-sales-list-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="20"></i><span>Your score out of 100 across demand, capture, conversion and leverage</span></div>
+        <div class="scene-close-sales-list-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="20"></i><span>Exactly where you're leaking, in your own words</span></div>
+        <div class="scene-close-sales-list-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="20"></i><span>The three agents to switch on first, and the ones to skip for now</span></div>
+        <div class="scene-close-sales-list-row-v1"><i class="icon-glyph-inline-base-v1" data-ico="check" data-size="20"></i><span>An honest verdict on the AI tools you already pay for</span></div>
       </div>
+    </div>
+    <div class="scene-close-sales-act-v1">
       <div class="scene-close-sales-actions-v1" data-r>
-        <a class="button-action-pill-large-v1" id="ctaButton" href="https://api.v2.affinitydesign.ca/r/get-ai?medium=short_link" target="_blank" rel="noopener">Get my free strategy audit<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="22"></i></a>
+        <a class="button-action-pill-large-v1" id="ctaButton" data-cta="close-cta" href="https://clients.affinitydesign.ca/offers/strategy-audit?ref=va-colour-your-life" target="_blank" rel="noopener">Get my free strategy audit<i class="icon-glyph-inline-base-v1" data-ico="chevR" data-size="22"></i></a>
         <button class="control-button-pill-ghost-v1" id="copyLinkButton" type="button">Copy link</button>
       </div>
+      <input class="scene-close-sales-fallback-v1" id="copyFallback" type="text" readonly hidden aria-label="Link to the free strategy audit">
       <div class="scene-close-sales-micro-v1" data-r>No call required. Built by a person, not an autoresponder.</div>
-    </div>
-    <div class="card-panel-surface-base-v1 scene-close-sales-qr-card-v1" id="qrCard" data-r>
-      <b>Scan to start your audit</b>
-      <div class="scene-close-sales-qr-frame-v1"><img alt="QR code. Scan it to get the free strategy audit." width="300" height="300" src="data:image/png;base64,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"></div>
-      <span class="scene-close-sales-link-v1">api.v2.affinitydesign.ca/r/get-ai</span>
     </div>
   </div>
   <div class="scene-close-sales-links-v1" data-r>
@@ -1979,6 +1980,140 @@ function onView(nodes, root, cb, r, ratio = 0.18) {
 /* Scene registry: each slide section carries data-scene="name" and its scene is SC.name = { enter(s, r), leave?() }. */
 const SC = {};
 
+/* ═══════════════════════ Links: which deck version, and where the buttons go ═══════════════════════ */
+/* @links:start */
+// Every call to action goes to the free strategy audit and carries the visitor's ?ref= and ?industry=.
+// This follows af-website-offer (web.goaffinitydesign.com): lib/signup.ts collects the tracking params, lib/audit.ts builds the audit link.
+// tests/sales-deck-links.test.ts lifts this block out of the built deck and runs it, so keep it free of DOM calls.
+const LINKS = (() => {
+  const AUDIT_URL = 'https://clients.affinitydesign.ca/offers/strategy-audit';
+  // The ref a plain link carries. A rep's own code (ref, aff, affiliate or code in the URL) replaces it.
+  const DEFAULT_REF = 'va-colour-your-life';
+  const STORAGE_KEY = 'afd_tracking_params'; // the offer site's key; kept for the visit only (sessionStorage)
+
+  // The versions of the deck that exist, one per pre-authorised industry. Any other industry gets DEFAULT_VARIANT.
+  // To add one: write its slides or lines marked data-variants="<name>", then list it here with the industry words that choose it
+  // (the offer site's lib/icp/routing.ts has the full word lists). icp is the audit's own segment for that industry.
+  const VARIANTS = { painting: { icp: 'trades', match: ['painter', 'painters', 'painting'] } };
+  const DEFAULT_VARIANT = 'painting';
+
+  // The offer site's TRACKING_PARAM_KEYS, plus any utm_*.
+  const TRACKED = ['ref', 'aff', 'affiliate', 'partner', 'code', 'offer_code', 'coupon', 'coupon_code', 'promo', 'promo_code', 'discount_code',
+    'gclid', 'fbclid', 'fbc', 'fbp', '_fbc', '_fbp', 'campaign_id', 'campaign_name', 'adset_id', 'adset_name', 'ad_id', 'ad_name', 'placement', 'site_source_name'];
+  // The platform credits whichever of these it finds (aff beats ref) and sorts out the winner, so all are passed on untouched.
+  const CODE_KEYS = ['ref', 'aff', 'affiliate', 'code'];
+  const INDUSTRY_KEYS = ['industry', 'business', 'icp']; // the offer site's audience aliases, in priority order
+  const LOCATION_KEYS = ['location', 'state'];
+  const MAX_PARAMS = 30;
+
+  const KEY = /^[a-z0-9_-]{1,40}$/;
+  const isTracked = (k) => KEY.test(k) && (TRACKED.includes(k) || k.startsWith('utm_'));
+  const maxLen = (k) => (CODE_KEYS.includes(k) ? 64 : 128);
+  const clean = (v, max) => String(v).replace(/[\u0000-\u001f\u007f]/g, '').trim().slice(0, max);
+  const slug = (v, max = 40) => String(v).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, max).replace(/-+$/g, '');
+  const words = (v) => String(v).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const limit = (o) => Object.fromEntries(Object.entries(o).slice(0, MAX_PARAMS));
+
+  // The first non-empty value of each param, keys lower-cased.
+  function pick(search) {
+    const first = new Map();
+    new URLSearchParams(search || '').forEach((value, key) => {
+      const k = key.toLowerCase();
+      if (first.has(k) || !KEY.test(k)) return;
+      const v = clean(value, maxLen(k));
+      if (v) first.set(k, v);
+    });
+    return first;
+  }
+
+  // Storage is never trusted: whatever it holds is filtered again, and a failure just means "nothing stored".
+  function load(store) {
+    try {
+      const raw = store && store.getItem(STORAGE_KEY);
+      const stored = raw ? JSON.parse(raw) : null;
+      if (!stored || typeof stored !== 'object' || Array.isArray(stored)) return {};
+      const out = {};
+      for (const k of Object.keys(stored)) {
+        if (typeof stored[k] !== 'string' || !isTracked(k)) continue;
+        const v = clean(stored[k], maxLen(k));
+        if (v) out[k] = v;
+      }
+      return limit(out);
+    } catch (e) { return {}; }
+  }
+  function save(store, params) {
+    try { if (store) store.setItem(STORAGE_KEY, JSON.stringify(params)); } catch (e) { /* storage unavailable */ }
+  }
+
+  // Longest industry word wins, as on the offer site.
+  function pickVariant(text) {
+    const padded = ` ${text} `;
+    let best = DEFAULT_VARIANT, bestLen = 0;
+    for (const name of Object.keys(VARIANTS)) {
+      for (const word of VARIANTS[name].match) {
+        if (word.length > bestLen && padded.includes(` ${word} `)) { best = name; bestLen = word.length; }
+      }
+    }
+    return best;
+  }
+
+  // What the URL says (or, failing that, what this visit stored): the tracking params, the industry, the location, and the deck version they pick.
+  function read(search, store) {
+    const first = pick(search);
+    const fresh = {};
+    first.forEach((v, k) => { if (isTracked(k)) fresh[k] = v; });
+    const hasFresh = Object.keys(fresh).length > 0;
+    const tracking = hasFresh ? limit(fresh) : load(store);
+    if (hasFresh) save(store, tracking);
+    const text = (keys) => keys.map((k) => first.get(k)).find(Boolean) || '';
+    const industry = text(INDUSTRY_KEYS), location = text(LOCATION_KEYS);
+    const variant = pickVariant(words(industry));
+    return {
+      tracking, variant, icp: VARIANTS[variant].icp,
+      industry: slug(industry) ? { slug: slug(industry) } : null,
+      location: slug(location) ? { slug: slug(location) } : null,
+    };
+  }
+
+  // The audit link for one button. What the visitor arrived with always beats the deck's own tags, and nothing is ever overwritten.
+  function href(ctx, position) {
+    const url = new URL(AUDIT_URL);
+    const set = (k, v) => { if (v && !url.searchParams.has(k)) url.searchParams.set(k, v); };
+    Object.keys(ctx.tracking).forEach((k) => set(k, ctx.tracking[k]));
+    if (!CODE_KEYS.some((k) => ctx.tracking[k])) set('ref', DEFAULT_REF);
+    set('icp', ctx.icp);
+    if (ctx.industry) set('industry', ctx.industry.slug);
+    if (ctx.location) set('location', ctx.location.slug);
+    set('utm_source', 'agents-getaffinitydesign');
+    set('utm_medium', 'sales-deck');
+    set('utm_campaign', `deck-${ctx.variant}`);
+    set('utm_content', slug(position));
+    return url.toString();
+  }
+
+  // Whether something marked data-variants="a b" belongs in version `variant`. An empty marker means every version.
+  function shows(list, variant) {
+    const names = String(list || '').split(/\s+/).filter(Boolean);
+    return names.length === 0 || names.includes(variant);
+  }
+
+  return { read, href, shows };
+})();
+/* @links:end */
+
+/* Start-up: choose the deck version, drop the lines that belong to other versions, and point every call to action at the audit link.
+   The HTML already carries the plain link, so the buttons work without any of this. This runs before the slide list is built. */
+(() => {
+  let store = null;
+  try { store = window.sessionStorage; } catch (e) { /* some embeds refuse storage access altogether */ }
+  const ctx = LINKS.read(location.search, store);
+  const root = document.documentElement;
+  root.dataset.variant = ctx.variant; root.dataset.icp = ctx.icp;
+  if (ctx.industry) root.dataset.industry = ctx.industry.slug;
+  $$('[data-variants]').forEach((n) => { if (!LINKS.shows(n.dataset.variants, ctx.variant)) n.remove(); });
+  $$('[data-cta]').forEach((a) => { a.href = LINKS.href(ctx, a.dataset.cta); });
+})();
+
 
 /* ═══════════════════════ Scenes ═══════════════════════ */
 const inside = (rs, sel) => rs.filter((n) => n.closest(sel));
@@ -2149,15 +2284,14 @@ SC.days = { enter(s, r) {
   const g = $('#daysGuarantee'); hide(g); anim(g, { opacity: [0, 1], y: [14, 0] }, { ...springSoft, delay: 2.6 });
 } };
 
-/* 14 the close: scan or tap */
+/* 14 the close: tap the button, or copy the link (the link layer has already put the visitor's ref on it) */
 SC.close = { async enter(s, r) {
   reveal($$('[data-r]', s), { delay: 0.1, gap: 0.09 });
-  const qr = $('#qrCard'); hide(qr); anim(qr, { opacity: [0, 1], scale: [0.94, 1] }, { ...springBounce, delay: 0.5 });
-  const copy = $('#copyLinkButton'); copy.textContent = 'Copy link';
+  const copy = $('#copyLinkButton'), box = $('#copyFallback'); copy.textContent = 'Copy link'; box.hidden = true;
   copy.onclick = async () => {
     const url = $('#ctaButton').href;
     try { await navigator.clipboard.writeText(url); copy.textContent = 'Copied'; }
-    catch (e) { copy.textContent = 'Select and copy'; const range = document.createRange(); range.selectNodeContents($('.scene-close-sales-link-v1', s)); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(range); }
+    catch (e) { copy.textContent = 'Select and copy'; box.value = url; box.hidden = false; box.focus(); box.select(); box.scrollLeft = 0; }
     setTimeout(() => { copy.textContent = 'Copy link'; }, 2200);
   };
   if (REDUCE) return;
