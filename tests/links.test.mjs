@@ -42,11 +42,11 @@ const EXPECTED_QUERY = {
   refOnly: { search: "?ref=paul", query: (p) => `ref=paul&icp=trades&${DECK_TAGS(p)}` },
   caseA: {
     search: "?ref=paul&industry=law&location=Toronto&icp=solo%20firms",
-    query: (p) => `ref=paul&icp=trades&industry=law&location=toronto&${DECK_TAGS(p)}`,
+    query: (p) => `ref=paul&icp=solo%20firms&industry=law&location=toronto&${DECK_TAGS(p)}`,
   },
   icpOnly: {
     search: "?ref=paul&icp=solo%20firms",
-    query: (p) => `ref=paul&icp=trades&industry=solo-firms&${DECK_TAGS(p)}`,
+    query: (p) => `ref=paul&icp=solo%20firms&${DECK_TAGS(p)}`,
   },
   stLouis: {
     search: "?ref=paul&location=St.Louis",
@@ -55,7 +55,7 @@ const EXPECTED_QUERY = {
   utmAndClickId: {
     search: "?ref=paul&industry=law&location=Toronto&icp=solo%20firms&utm_source=meta&utm_campaign=t1&fbclid=fb1",
     query: (p) =>
-      `ref=paul&utm_source=meta&utm_campaign=t1&fbclid=fb1&icp=trades&industry=law&location=toronto&utm_medium=sales-deck&utm_content=${p}`,
+      `ref=paul&utm_source=meta&utm_campaign=t1&fbclid=fb1&icp=solo%20firms&industry=law&location=toronto&utm_medium=sales-deck&utm_content=${p}`,
   },
   paintersInOttawa: {
     search: "?ref=paul&industry=house%20painters&location=Ottawa",
@@ -64,7 +64,7 @@ const EXPECTED_QUERY = {
   // The buttons slug whatever they are given (main's own behaviour); only the cover copy rejects these values.
   badValues: {
     search: "?ref=paul&icp=%3Cscript%3E&industry=evil.com/x&location=http%3A%2F%2Fevil.example",
-    query: (p) => `ref=paul&icp=trades&industry=evil-com-x&location=http-evil-example&${DECK_TAGS(p)}`,
+    query: (p) => `ref=paul&icp=%3Cscript%3E&industry=evil-com-x&location=http-evil-example&${DECK_TAGS(p)}`,
   },
 };
 
@@ -81,7 +81,7 @@ for (const [name, { search, query }] of Object.entries(EXPECTED_QUERY)) {
   });
 }
 
-test("case a with ref=paul: all three links carry ref, industry and location slugs and the deck's icp", () => {
+test("case a with ref=paul: all three links carry ref, industry and location slugs and the rep's own icp", () => {
   const visit = LINKS.read(EXPECTED_QUERY.caseA.search, null);
   for (const position of positions) {
     const link = new URL(LINKS.href(visit, position));
@@ -89,12 +89,12 @@ test("case a with ref=paul: all three links carry ref, industry and location slu
     assert.equal(link.searchParams.get("ref"), "paul");
     assert.equal(link.searchParams.get("industry"), "law");
     assert.equal(link.searchParams.get("location"), "toronto");
-    assert.equal(link.searchParams.get("icp"), "trades", "the deck's own icp, not the rep's");
+    assert.equal(link.searchParams.get("icp"), "solo firms", "the rep's own icp");
     assert.equal(link.searchParams.get("utm_content"), position);
   }
 });
 
-test("with an icp only, the buttons still read it as the industry slug (the audit's own rule); only the copy does not", () => {
+test("with an icp only, the buttons carry no industry: an icp is never read as one", () => {
   const visit = LINKS.read("?ref=paul&icp=solo%20firms", null);
-  assert.equal(visit.industry.slug, "solo-firms");
+  assert.equal(visit.industry, null);
 });
