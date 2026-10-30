@@ -1982,7 +1982,7 @@ const SC = {};
 
 /* ═══════════════════════ Links: which deck version, and where the buttons go ═══════════════════════ */
 /* @links:start */
-// Every call to action goes to the free strategy audit and carries the visitor's ?ref= and ?industry=.
+// Every call to action goes to the free strategy audit and carries the visitor's ?ref=, ?industry=, ?location= and ?icp=.
 // The deck adds no ref of its own: a link without one carries none, and each sales rep adds theirs.
 // This follows af-website-offer (web.goaffinitydesign.com): lib/signup.ts collects the tracking params, lib/audit.ts builds the audit link.
 // tests/sales-deck-links.test.ts lifts this block out of the built deck and runs it, so keep it free of DOM calls.
@@ -1992,7 +1992,8 @@ const LINKS = (() => {
 
   // The versions of the deck that exist, one per pre-authorised industry. Any other industry gets DEFAULT_VARIANT.
   // To add one: write its slides or lines marked data-variants="<name>", then list it here with the industry words that choose it
-  // (the offer site's lib/icp/routing.ts has the full word lists). icp is the audit's own segment for that industry.
+  // (the offer site's lib/icp/routing.ts has the full word lists). icp is the audit's own segment for that industry: the link carries it
+  // only when the visitor gave no icp of their own.
   const VARIANTS = { painting: { icp: 'trades', match: ['painter', 'painters', 'painting'] } };
   const DEFAULT_VARIANT = 'painting';
 
@@ -2001,7 +2002,9 @@ const LINKS = (() => {
     'gclid', 'fbclid', 'fbc', 'fbp', '_fbc', '_fbp', 'campaign_id', 'campaign_name', 'adset_id', 'adset_name', 'ad_id', 'ad_name', 'placement', 'site_source_name'];
   // The platform credits whichever of these it finds (aff beats ref) and sorts out the winner, so all are passed on untouched.
   const CODE_KEYS = ['ref', 'aff', 'affiliate', 'code'];
-  const INDUSTRY_KEYS = ['industry', 'business', 'icp']; // the offer site's audience aliases, in priority order
+  const INDUSTRY_KEYS = ['industry', 'business', 'icp']; // the offer site's audience aliases, in priority order: the words that choose the deck version
+  const INDUSTRY_PARAM_KEYS = ['industry', 'business']; // what the link carries as the industry: a visitor's icp is a segment, never an industry
+  const MAX_ICP = 120; // characters of the visitor's icp that are passed on
   const LOCATION_KEYS = ['location', 'state'];
   const MAX_PARAMS = 30;
 
@@ -2056,7 +2059,8 @@ const LINKS = (() => {
     return best;
   }
 
-  // What the URL says (or, failing that, what this visit stored): the tracking params, the industry, the location, and the deck version they pick.
+  // What the URL says (or, failing that, what this visit stored): the tracking params, the industry, the location, the visitor's own icp,
+  // and the deck version they pick.
   function read(search, store) {
     const first = pick(search);
     const fresh = {};
@@ -2065,28 +2069,40 @@ const LINKS = (() => {
     const tracking = hasFresh ? limit(fresh) : load(store);
     if (hasFresh) save(store, tracking);
     const text = (keys) => keys.map((k) => first.get(k)).find(Boolean) || '';
-    const industry = text(INDUSTRY_KEYS), location = text(LOCATION_KEYS);
-    const variant = pickVariant(words(industry));
+    const variant = pickVariant(words(text(INDUSTRY_KEYS))); // industry, business, then icp: the words that have always chosen the version
+    const industry = text(INDUSTRY_PARAM_KEYS), location = text(LOCATION_KEYS); // what is sent on: an icp is never an industry
+    // The visitor's own icp, sent on as written. pick() already took the first non-empty ?icp= with control characters out and the ends trimmed.
+    // pick() cuts at 128 UTF-16 units, which can leave half an emoji on the end: that half is dropped.
+    const visitorIcp = Array.from(first.get('icp') || '').slice(0, MAX_ICP).join('').replace(/[\ud800-\udbff]$/, '').trim();
     return {
-      tracking, variant, icp: VARIANTS[variant].icp,
+      tracking, variant, icp: VARIANTS[variant].icp, visitorIcp,
       industry: slug(industry) ? { slug: slug(industry) } : null,
       location: slug(location) ? { slug: slug(location) } : null,
     };
   }
 
+  // The visitor's icp as encodeURIComponent writes it ("solo firms" is solo%20firms). A value that cannot be encoded (a lone surrogate) counts as not given.
+  const encodedIcp = (v) => { try { return v ? encodeURIComponent(v) : ''; } catch (e) { return ''; } };
+
   // The audit link for one button. What the visitor arrived with always beats the deck's own tags, and nothing is ever overwritten.
+  // The query is written one pair at a time and joined: URLSearchParams writes a space as "+", so every pair but the visitor's icp is
+  // written by it, exactly as before, and the icp is written with %20.
   function href(ctx, position) {
-    const url = new URL(AUDIT_URL);
-    const set = (k, v) => { if (v && !url.searchParams.has(k)) url.searchParams.set(k, v); };
+    const pairs = [];
+    const has = (k) => pairs.some((pair) => pair[0] === k);
+    const set = (k, v) => { if (v && !has(k)) pairs.push([k, new URLSearchParams([[k, v]]).toString()]); };
     Object.keys(ctx.tracking).forEach((k) => set(k, ctx.tracking[k]));
-    set('icp', ctx.icp);
+    // The visitor's own icp, unchanged, in the slot the deck's icp has always had; the deck's own only when they gave none.
+    const icp = encodedIcp(ctx.visitorIcp);
+    if (icp && !has('icp')) pairs.push(['icp', `icp=${icp}`]);
+    else set('icp', ctx.icp);
     if (ctx.industry) set('industry', ctx.industry.slug);
     if (ctx.location) set('location', ctx.location.slug);
     set('utm_source', 'agents-getaffinitydesign');
     set('utm_medium', 'sales-deck');
     set('utm_campaign', `deck-${ctx.variant}`);
     set('utm_content', slug(position));
-    return url.toString();
+    return `${AUDIT_URL}?${pairs.map((pair) => pair[1]).join('&')}`;
   }
 
   // Whether something marked data-variants="a b" belongs in version `variant`. An empty marker means every version.
